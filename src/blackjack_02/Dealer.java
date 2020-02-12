@@ -30,6 +30,13 @@ public class Dealer {
         initPlayers(num);
     }
     
+    public void playGame(){
+        this.dealOutOpeningHand();
+        this.playOutPlayerHands();
+        this.playOutDealerHand();
+        this.declareWinners();
+    }
+    
     private void initPlayers(int numOfPlayers){
         myPlayers = new Player[numOfPlayers];
         for(int i = 0; i < myPlayers.length; i++){
@@ -81,6 +88,33 @@ public class Dealer {
     }
     
     public void declareWinners(){
+        
+        for(int i = 0; i < myPlayers.length; i++){
+            Player currPlayer = myPlayers[i];
+            System.out.println(currPlayer.getName() + "'s Hand");
+            currPlayer.getMyHand().printHand();
+            if(dealerHand.getScore() > 21 || 
+                    currPlayer.getMyHand().getScore() > 21){
+                if(currPlayer.getMyHand().getScore() > 21){
+                    System.out.println(currPlayer.getName() + 
+                            " you're Busted Buster!");
+                }else{
+                    System.out.println(currPlayer.getName() +
+                            " the dealer Busted, you win!");
+                }
+            }else if(dealerHand.getScore()==21 || 
+                    dealerHand.getNumOfCards() > 4){
+                System.out.println(currPlayer.getName() +
+                        " the Dealer got lucky");
+            }else if(currPlayer.getMyHand().getNumOfCards() > 4){
+                System.out.println(currPlayer.getName() + 
+                        " there goes the last luck you had, you win!");
+            }else if(currPlayer.getMyHand().getScore() > dealerHand.getScore()){
+                System.out.println(currPlayer.getName() + "The battle was won");
+            }else{
+                System.out.println(currPlayer.getName() + "YA DONE GOOFED!");
+            }
+        }
         
     }
 }
